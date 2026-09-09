@@ -1,11 +1,15 @@
-name: 每日检查 USCIS 表格版本
+name: 检查 USCIS 表格版本（手动后备）
 
+# 每日检查已交给云端的 Claude 复核任务，这里不再定时运行。
+#
+# 原因：GitHub 的定时任务在高峰期会延迟几十分钟，极端情况下整次跳过。
+# 两边各跑一次会互相撞车 —— 复核任务可能读到尚未更新的数据，
+# 或与本工作流的提交产生冲突。全天只保留一个执行者，竞态就不存在。
+#
+# 本工作流保留为后备：云端任务出问题时，可在 Actions 页面手动触发，
+# 拿到当天的数据（只是没有中文要点的复核与更新）。
 on:
-  schedule:
-    # 13:00 UTC = 美东夏令时 09:00 / 冬令时 08:00
-    # GitHub 的定时任务在高峰期可能延迟几十分钟，属正常现象
-    - cron: "0 13 * * *"
-  workflow_dispatch: # 支持在 Actions 页面手动触发
+  workflow_dispatch:
 
 permissions:
   contents: write # 提交更新后的数据与网页
@@ -36,9 +40,7 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
-          # 即使没有版本变化，last_checked.json 每天也会变，
-          # 保证仓库天天有提交 —— 否则 GitHub 会在 60 天无活动后停用本工作流
-          git diff --staged --quiet || git commit -m "chore: 每日检查 $(date -u +%Y-%m-%d)"
+          git diff --staged --quiet || git commit -m "chore: 手动检查 $(date -u +%Y-%m-%d)"
           git push
 
       - name: 版本有变化时开 Issue 通知
