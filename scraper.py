@@ -23,6 +23,15 @@ UA = (
 DATE_RE = re.compile(r"\d{2}/\d{2}/\d{2}\b")
 DELAY = 2.0  # 每个请求之间的间隔，礼貌抓取
 
+# 长度上限只是防止页面结构变化时抓进整页内容，不是为了省空间。
+# 实测最长的公告 1260 字符、Edition Date 原文 315 字符，留足数倍余量：
+# 公告里的切换规则往往在末尾，截断会丢掉最关键的部分。
+ALERT_MAX = 10000
+RAW_MAX = 6000
+
+# 截断标记，run.py 靠它判断是否需要调高上限
+TRUNCATED = " […截断]"
+
 
 def _clean(text: str) -> str:
     """压缩空白，并修掉 USCIS 页面里的花括号引号。"""
@@ -30,6 +39,15 @@ def _clean(text: str) -> str:
     # 版本日期后面跟着一个独立的句点 span，去掉中间多余的空格
     text = re.sub(r"\s+", " ", text).strip()
     return re.sub(r"\s+([.,;:])", r"\1", text)
+
+
+def _truncate(text: str, limit: int) -> str:
+    """超长时在最后一个完整句子处收口，避免像原先那样断在半句话上。"""
+    if len(text) <= limit:
+        return text
+    cut = text.rfind(". ", 0, limit)
+    # 找不到靠后的句号时宁可硬截，也不要退回到很靠前的位置
+    return (text[: cut + 1] if cut > limit // 2 else text[:limit]) + TRUNCATED
 
 
 def _edition_alerts(soup: BeautifulSoup) -> list[str]:
@@ -47,11 +65,7 @@ def _edition_alerts(soup: BeautifulSoup) -> list[str]:
     for node in soup.select("div.messages__text"):
         text = _clean(node.get_text(" ", strip=True))
         if re.search(r"\bedition\b", text, re.I) and DATE_RE.search(text):
-            # 公告常有条件与例外，截断会丢关键信息；留足长度并在句末收口
-            if len(text) > 2000:
-                cut = text.rfind(". ", 0, 2000)
-                text = text[: cut + 1] + " […]" if cut > 900 else text[:2000] + " […]"
-            out.append(text)
+            out.append(_truncate(text, ALERT_MAX))
     return out
 
 
@@ -87,7 +101,7 @@ def fetch_form(slug: str, session: requests.Session) -> dict:
         panel = header.find_next_sibling("div", class_="accordion__panel")
         block = panel.select_one("div.first.last") if panel else None
         # 取不到精确块时退回整个 panel，宁可多抓通用提示也不要丢信息
-        rec["raw"] = _clean((block or panel).get_text(" ", strip=True))[:1200]
+        rec["raw"] = _truncate(_clean((block or panel).get_text(" ", strip=True)), RAW_MAX)
         rec["dates"] = DATE_RE.findall(rec["raw"])
         rec["status"] = "ok" if rec["dates"] else "no_date"
         rec["alerts"] = _edition_alerts(soup)

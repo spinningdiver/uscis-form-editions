@@ -11,7 +11,7 @@ from pathlib import Path
 import yaml
 
 import build
-from scraper import fetch_all
+from scraper import TRUNCATED, fetch_all
 
 ROOT = Path(__file__).parent
 
@@ -109,6 +109,11 @@ def main() -> int:
         print(f"\n!! {len(failed)} 个表格抓取失败（网页沿用上一轮数据）：")
         for f in failed:
             print(f"   {f['id']:<8} {f['status']}  {f.get('error', '')}")
+
+    # 上限留了数倍余量，真被截断说明官网内容大幅变长或页面结构变了，值得看一眼
+    clipped = [f["id"] for f in forms if TRUNCATED in (f["raw"] + "".join(f["alerts"]))]
+    if clipped:
+        print(f"\n!! 以下表格的文本被截断，请检查是否需要调高 scraper.py 的上限：{', '.join(clipped)}")
 
     if changes:
         print(f"\n>> 发现 {len(changes)} 处版本变化：")
