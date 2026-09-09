@@ -1,16 +1,19 @@
-name: 每日抓取 USCIS 表格版本
+name: 抓取 USCIS 表格版本
 
-# 抓取由本工作流负责 —— 云端复核环境的出口策略禁止访问 www.uscis.gov，
-# 只有 GitHub 的 runner 能拿到数据。
+# 抓取必须在 GitHub runner 上跑 —— 云端 Claude 复核环境的出口策略
+# 禁止访问 www.uscis.gov，只有这里拿得到数据。
 #
-# 抓完推送后，push 事件会唤醒云端的 Claude 复核任务去读这批数据。
-# 用事件触发而不是固定时间差：GitHub 的定时任务在高峰期会延迟几十分钟，
-# 按时间约定必然产生竞态，按事件则永远是数据到位之后才开始复核。
+# 正常情况下由云端的 Claude 复核任务通过 workflow_dispatch 触发：
+# Claude 的定时器准时，dispatch 立即执行，避开了 GitHub 定时任务
+# 在高峰期几十分钟的排队延迟（极端情况还会整次跳过）。
+# Claude 触发后会等待本工作流结束，再拉取数据做复核，顺序确定。
+#
+# schedule 只作兜底：万一云端任务当天没跑起来，17:00 UTC 仍会抓一次。
+# 兜底触发时若当天已经抓过，会直接跳过，不重复请求 USCIS。
 on:
-  schedule:
-    # 13:00 UTC = 美东夏令时 09:00 / 冬令时 08:00
-    - cron: "0 13 * * *"
   workflow_dispatch:
+  schedule:
+    - cron: "0 17 * * *" # 美东 13:00，晚于 Claude 的正常触发时间
 
 permissions:
   contents: write # 提交更新后的数据与网页
@@ -26,27 +29,43 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: 兜底触发时，若当天已抓过则跳过
+        id: guard
+        if: github.event_name == 'schedule'
+        run: |
+          today=$(date -u +%Y-%m-%d)
+          last=$(grep -o '"checked_at": "[^"]*"' data/last_checked.json | cut -d'"' -f4 | cut -c1-10)
+          echo "上次抓取 $last，今天 $today"
+          if [ "$last" = "$today" ]; then
+            echo "今天已经抓过，跳过。"
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - uses: actions/setup-python@v5
+        if: steps.guard.outputs.skip != 'true'
         with:
           python-version: "3.12"
           cache: pip
 
-      - run: pip install -r requirements.txt
+      - if: steps.guard.outputs.skip != 'true'
+        run: pip install -r requirements.txt
 
       - name: 抓取并生成网页
+        if: steps.guard.outputs.skip != 'true'
         # --audit 额外导出全部未筛选的公告，供云端复核任务阅读
         run: python run.py --ci --audit
 
       - name: 提交结果
+        if: steps.guard.outputs.skip != 'true'
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
-          git diff --staged --quiet || git commit -m "chore: 每日抓取 $(date -u +%Y-%m-%d)"
+          git diff --staged --quiet || git commit -m "chore: 抓取 $(date -u +%Y-%m-%d)"
           git push
 
       - name: 版本有变化时开 Issue 通知
-        if: hashFiles('data/changes.md') != ''
+        if: steps.guard.outputs.skip != 'true' && hashFiles('data/changes.md') != ''
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
