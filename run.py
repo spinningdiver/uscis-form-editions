@@ -4,6 +4,7 @@
 CI 运行：     python run.py --ci     （检测到变化时额外写出 data/changes.md 供开 Issue 用）
 """
 
+import json
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -100,6 +101,19 @@ def main() -> int:
     build.decorate(forms, now)
     build.render(forms, now.strftime("%Y-%m-%d %H:%M ET"))
     build.save(forms, changes, now)
+
+    # 复核用：把未经筛选的全部公告导出，供每日人工/模型审阅
+    if "--audit" in sys.argv:
+        audit = [
+            {"id": r["id"], "url": r["url"], "kept": r["alerts"], "all": r["alerts_all"]}
+            for r in records
+        ]
+        (build.DATA / "audit-alerts.json").write_text(
+            json.dumps(audit, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n"
+        )
+        total = sum(len(a["all"]) for a in audit)
+        kept = sum(len(a["kept"]) for a in audit)
+        print(f"\n已导出复核文件：公告共 {total} 条，筛选保留 {kept} 条")
 
     failed = [f for f in forms if f["status"] != "ok"]
     print()

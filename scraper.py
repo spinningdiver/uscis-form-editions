@@ -50,6 +50,16 @@ def _truncate(text: str, limit: int) -> str:
     return (text[: cut + 1] if cut > limit // 2 else text[:limit]) + TRUNCATED
 
 
+def _all_alerts(soup: BeautifulSoup) -> list[str]:
+    """页首全部公告，不做筛选。供人工/模型复核筛选规则是否漏判。"""
+    out = []
+    for node in soup.select("div.messages__text"):
+        text = _clean(node.get_text(" ", strip=True))
+        if text:
+            out.append(_truncate(text, ALERT_MAX))
+    return out
+
+
 def _edition_alerts(soup: BeautifulSoup) -> list[str]:
     """挑出页面顶部与版本有关的公告。
 
@@ -72,7 +82,10 @@ def _edition_alerts(soup: BeautifulSoup) -> list[str]:
 def fetch_form(slug: str, session: requests.Session) -> dict:
     """抓取单个表格，返回一条原始记录。失败时 status 非 ok，绝不抛异常。"""
     url = BASE + slug
-    rec = {"id": slug.upper(), "url": url, "title": "", "raw": "", "dates": [], "alerts": []}
+    rec = {
+        "id": slug.upper(), "url": url, "title": "", "raw": "",
+        "dates": [], "alerts": [], "alerts_all": [],
+    }
 
     try:
         resp = session.get(url, headers={"User-Agent": UA}, timeout=30)
@@ -105,6 +118,7 @@ def fetch_form(slug: str, session: requests.Session) -> dict:
         rec["dates"] = DATE_RE.findall(rec["raw"])
         rec["status"] = "ok" if rec["dates"] else "no_date"
         rec["alerts"] = _edition_alerts(soup)
+        rec["alerts_all"] = _all_alerts(soup)
 
     except Exception as exc:  # 单个表格失败不应中断整轮抓取
         rec["status"] = "error"
