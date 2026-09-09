@@ -95,10 +95,14 @@ def diff(forms: list[dict], previous: dict, today: str) -> list[dict]:
     for f in forms:
         old = previous.get(f["id"])
 
-        # 抓取失败时沿用上一轮的数据，避免网页上凭空少一行
+        # 抓取失败时沿用上一轮的数据，避免网页上凭空少一行。
+        # 必须把展示用的字段全部沿用：只沿用 cur/also/raw 会让公告原文和
+        # 「已公告新版」标记从网页上消失，而且 alerts 为空的快照会成为下一轮
+        # 的基准，等抓取恢复后 newly_announced 会误报一轮不存在的版本变动。
         if f["status"] != "ok":
             if old:
-                f.update({k: old.get(k, f[k]) for k in ("cur", "also", "raw")})
+                carry = ("cur", "also", "raw", "en", "alerts", "up", "soon")
+                f.update({k: old.get(k, f[k]) for k in carry})
                 f["stale"] = True
             f["changed"] = False
             f["last_changed"] = (old or {}).get("last_changed", "")
