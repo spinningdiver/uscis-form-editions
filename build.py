@@ -1,9 +1,9 @@
-"""把抓取结果加工成网页数据，并生成 site/index.html。
+"""把抓取结果加工成网页数据，并生成 docs/index.html。
 
 职责分三段：
   merge()  —— 抓取记录 + notes.yaml 的人工解读 → 页面用的表格记录
   diff()   —— 与上一轮结果比对，标出变化
-  render() —— 数据注入 site/template.html
+  render() —— 数据注入 docs/template.html
 """
 
 import json
@@ -14,7 +14,7 @@ import yaml
 
 ROOT = Path(__file__).parent
 DATA = ROOT / "data"
-SITE = ROOT / "site"
+SITE = ROOT / "docs"
 EASTERN = timezone(timedelta(hours=-4))  # 夏令时；仅用于显示
 
 # 「有更新」标记保留多久
@@ -132,7 +132,7 @@ def decorate(forms: list[dict], today: datetime) -> None:
 
 
 def render(forms: list[dict], checked_label: str) -> None:
-    """把数据注入模板，写出 site/index.html。"""
+    """把数据注入模板，写出 docs/index.html。"""
     template = (SITE / "template.html").read_text(encoding="utf-8")
     keys = ("id", "cn", "en", "cur", "also", "raw", "note", "flag", "tags")
     slim = [{k: f[k] for k in keys} for f in forms]
