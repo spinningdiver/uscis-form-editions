@@ -47,7 +47,11 @@ def _edition_alerts(soup: BeautifulSoup) -> list[str]:
     for node in soup.select("div.messages__text"):
         text = _clean(node.get_text(" ", strip=True))
         if re.search(r"\bedition\b", text, re.I) and DATE_RE.search(text):
-            out.append(text[:700])
+            # 公告常有条件与例外，截断会丢关键信息；留足长度并在句末收口
+            if len(text) > 2000:
+                cut = text.rfind(". ", 0, 2000)
+                text = text[: cut + 1] + " […]" if cut > 900 else text[:2000] + " […]"
+            out.append(text)
     return out
 
 
