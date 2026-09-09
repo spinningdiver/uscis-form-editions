@@ -26,14 +26,18 @@ def write_changes_md(changes: list[dict], path: Path) -> None:
     """CI 用它作为 Issue 的标题与正文。第一行是标题。"""
     if len(changes) == 1:
         c = changes[0]
-        title = f"{c['id']} 版本更新：{c['from']} → {c['to']}"
+        verb = "版本更新" if c["kind"] == "edition" else "公告新版"
+        title = f"{c['id']} {verb}：{c['from']} → {c['to']}"
     else:
-        title = f"{len(changes)} 个表格版本更新（{', '.join(c['id'] for c in changes)}）"
+        title = f"{len(changes)} 个表格有版本变动（{', '.join(c['id'] for c in changes)}）"
 
-    lines = [title, "", "| 表格 | 名称 | 原版本 | 新版本 | 也接受 |", "|---|---|---|---|---|"]
+    lines = [title, "", "| 表格 | 名称 | 类型 | 原/当前 | 新版本 | 也接受 |", "|---|---|---|---|---|---|"]
     for c in changes:
         also = ", ".join(c["also"]) or "—"
-        lines.append(f"| [{c['id']}]({c['url']}) | {c['cn']} | `{c['from']}` | **`{c['to']}`** | {also} |")
+        kind = "已生效" if c["kind"] == "edition" else "预告"
+        lines.append(
+            f"| [{c['id']}]({c['url']}) | {c['cn']} | {kind} | `{c['from']}` | **`{c['to']}`** | {also} |"
+        )
     lines += ["", "网页已自动更新。请核对官网原文后，视情况在 `notes.yaml` 中补充中文要点。"]
 
     path.write_text("\n".join(lines), encoding="utf-8", newline="\n")
@@ -65,7 +69,8 @@ def main() -> int:
     if changes:
         print(f"\n>> 发现 {len(changes)} 处版本变化：")
         for c in changes:
-            print(f"   {c['id']:<8} {c['from']} → {c['to']}   {c['cn']}")
+            kind = "已生效" if c["kind"] == "edition" else "预告  "
+            print(f"   {c['id']:<8} {kind}  {c['from']} → {c['to']}   {c['cn']}")
         if ci:
             write_changes_md(changes, build.DATA / "changes.md")
     else:

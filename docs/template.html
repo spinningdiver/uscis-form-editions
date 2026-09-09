@@ -196,6 +196,9 @@ h1{
   border-left:2px solid var(--accent); border-radius:0 6px 6px 0; padding:11px 14px;
 }
 .raw b{font-family:var(--mono); font-weight:600; color:var(--ink); background:var(--accent-soft); padding:0 3px; border-radius:3px}
+.alertraw{border-left-color:var(--warn)}
+.alertraw b{background:var(--warn-soft); color:var(--warn)}
+.alertraw + .alertraw{margin-top:8px}
 .dnote{font-size:13px; color:var(--ink-2); margin:0; max-width:70ch}
 .dnote strong{color:var(--warn)}
 .dlinks{display:flex; gap:16px; flex-wrap:wrap; align-items:center}
@@ -255,7 +258,7 @@ footer .disc{border-left:2px solid var(--line); padding-left:11px; max-width:72c
   <div class="statbar">
     <span class="stat"><b id="s-total">15</b> 追踪表格</span>
     <span class="stat warn"><span class="dot"></span><b id="s-multi">3</b> 多版本并存</span>
-    <span class="stat alert"><span class="dot"></span><b id="s-soon">1</b> 即将强制换版</span>
+    <span class="stat alert"><span class="dot"></span><b id="s-soon">1</b> 已公告新版</span>
     <span class="spacer"></span>
     <span class="checked"><span class="live"></span>最后检查 {{CHECKED}}</span>
   </div>
@@ -289,7 +292,7 @@ footer .disc{border-left:2px solid var(--line); padding-left:11px; max-width:72c
     <h2>状态标记说明</h2>
     <ul>
       <li><span class="tag upd">有更新</span><span>与上次检查相比版本号发生变化。系统会同时给管理员发通知，标记保留 30 天。</span></li>
-      <li><span class="tag soon">即将换版</span><span>USCIS 已公布新版本及强制生效日期，需提前准备。</span></li>
+      <li><span class="tag soon">即将换版</span><span>USCIS 已公告新版本日期，但尚未生效。公告原文见展开内容。</span></li>
       <li><span class="tag multi">多版本</span><span>旧版本目前仍被受理，但建议一律使用最新版。</span></li>
       <li><span class="tag stable">单一版本</span><span>仅接受当前版本，无其他可用版本。</span></li>
     </ul>
@@ -327,7 +330,7 @@ function markNote(t){
 }
 function markRaw(t, f){
   let h = esc(t);
-  [f.cur, ...f.also].forEach(d => { h = h.split(d).join("<b>" + d + "</b>"); });
+  [f.cur, ...f.also, f.up].filter(Boolean).forEach(d => { h = h.split(d).join("<b>" + d + "</b>"); });
   return h;
 }
 
@@ -367,11 +370,13 @@ function render(){
         ${f.also.length
           ? `<span class="alsowrap">${f.also.map(d => `<span class="also">${esc(d)}</span>`).join("")}</span>`
           : `<span class="none">—</span>`}
-        <span class="tagcell">${f.tags.map(t => `<span class="tag ${t}">${TAGTEXT[t]}</span>`).join("")}</span>
+        <span class="tagcell">${f.tags.map(t => `<span class="tag ${t}">${t === "soon" && f.up ? "即将换版 " + f.up : TAGTEXT[t]}</span>`).join("")}</span>
       </summary>
       <div class="detail">
         ${f.note ? `<div><div class="dlabel">要点</div><p class="dnote">${markNote(f.note)}</p></div>` : ""}
-        <div><div class="dlabel">USCIS 官网原文</div><p class="raw">${markRaw(f.raw, f)}</p></div>
+        ${f.alerts && f.alerts.length ? `<div><div class="dlabel">USCIS 官网公告</div>${
+          f.alerts.map(a => `<p class="raw alertraw">${markRaw(a, f)}</p>`).join("")}</div>` : ""}
+        <div><div class="dlabel">Edition Date 原文</div><p class="raw">${markRaw(f.raw, f)}</p></div>
         <div class="dlinks">
           <a href="https://www.uscis.gov/${f.id.toLowerCase()}" target="_blank" rel="noopener">官网表格页 ↗</a>
           <a href="https://www.uscis.gov/sites/default/files/document/forms/${f.id.toLowerCase()}.pdf" target="_blank" rel="noopener">表格 PDF ↗</a>

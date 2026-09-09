@@ -7,6 +7,7 @@
 """
 
 import json
+import re
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -19,6 +20,17 @@ EASTERN = timezone(timedelta(hours=-4))  # 夏令时；仅用于显示
 
 # 「有更新」标记保留多久
 BADGE_DAYS = 30
+
+DATE_RE = re.compile(r"\d{2}/\d{2}/\d{2}\b")
+
+
+def _dnum(date: str) -> int:
+    """mm/dd/yy → 可比较的整数。USCIS 的版本日期都在 2000 年后。"""
+    try:
+        m, d, y = date.split("/")
+        return int("20" + y + m + d)
+    except ValueError:
+        return 0
 
 
 def load_notes() -> dict:
@@ -44,6 +56,19 @@ def merge(records: list[dict], notes: dict) -> list[dict]:
         cur = dates[0] if dates else ""
         # 当前版号常在原文里重复出现（如 I-693 的条件说明），去重后还要把它本身排除
         also = [d for d in dict.fromkeys(dates[1:]) if d != cur]
+
+        # 公告里出现、且晚于当前版本的日期 = 尚未生效的新版。
+        # 必须比日期大小：公告里也会提到仍被接受的旧版
+        # （如 I-864 的 10/17/24 早于当前的 08/24/26），那不是预告。
+        # 这类旧版信息不做推断，交由页面上的公告原文如实呈现。
+        alerts = rec.get("alerts") or []
+        known = {cur, *also}
+        upcoming = [
+            d
+            for d in dict.fromkeys(d for t in alerts for d in DATE_RE.findall(t))
+            if d not in known and _dnum(d) > _dnum(cur)
+        ]
+
         forms.append(
             {
                 "id": rec["id"],
@@ -52,8 +77,11 @@ def merge(records: list[dict], notes: dict) -> list[dict]:
                 "cur": cur,
                 "also": also,
                 "raw": rec.get("raw", ""),
+                "alerts": alerts,
+                "up": upcoming[0] if upcoming else "",
                 "note": (note.get("note") or "").strip(),
-                "soon": bool(note.get("soon")),
+                # 一般由公告自动判定；notes.yaml 里写 soon 可以手工补一个
+                "soon": bool(upcoming) or bool(note.get("soon")),
                 "status": rec.get("status", "error"),
                 "error": rec.get("error", ""),
             }
@@ -83,16 +111,21 @@ def diff(forms: list[dict], previous: dict, today: str) -> list[dict]:
             continue
 
         moved = f["cur"] != old["cur"] or f["also"] != old.get("also", [])
-        if moved:
-            f["changed"] = True
-            f["prev_cur"] = old["cur"]
-            f["last_changed"] = today
+        # 官网新公告了一个未来版本，本身也值得通知 —— 当前版本这时还没变
+        newly_announced = bool(f["up"]) and f["up"] != old.get("up", "")
+
+        if moved or newly_announced:
+            f["changed"] = moved
+            f["last_changed"] = today if moved else old.get("last_changed", "")
+            if moved:
+                f["prev_cur"] = old["cur"]
             changes.append(
                 {
+                    "kind": "edition" if moved else "upcoming",
                     "id": f["id"],
                     "cn": f["cn"],
-                    "from": old["cur"],
-                    "to": f["cur"],
+                    "from": old["cur"] if moved else f["cur"],
+                    "to": f["cur"] if moved else f["up"],
                     "also": f["also"],
                     "url": f"https://www.uscis.gov/{f['id'].lower()}",
                 }
@@ -134,7 +167,7 @@ def decorate(forms: list[dict], today: datetime) -> None:
 def render(forms: list[dict], checked_label: str) -> None:
     """把数据注入模板，写出 docs/index.html。"""
     template = (SITE / "template.html").read_text(encoding="utf-8")
-    keys = ("id", "cn", "en", "cur", "also", "raw", "note", "flag", "tags")
+    keys = ("id", "cn", "en", "cur", "also", "raw", "alerts", "up", "note", "flag", "tags")
     slim = [{k: f[k] for k in keys} for f in forms]
 
     html = template.replace(

@@ -63,10 +63,10 @@ def build_html(changes: list[dict], site_url: str) -> str:
 <div style="max-width:640px;margin:0 auto;background:#fff;border:1px solid #dce2e8;border-radius:8px;overflow:hidden">
   <div style="padding:20px 22px 16px;border-bottom:1px solid #eaeef2">
     <div style="{MONO};font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#66727e;margin-bottom:6px">USCIS Form Edition Tracker</div>
-    <div style="font-size:19px;font-weight:600;color:#131a21">{len(changes)} 个表格版本有更新</div>
+    <div style="font-size:19px;font-weight:600;color:#131a21">{len(changes)} 个表格有版本变动</div>
   </div>
   <table style="width:100%;border-collapse:collapse">
-    <tr><th style="{TH}">表格</th><th style="{TH}">名称</th><th style="{TH}">原版本</th><th style="{TH}">新版本</th><th style="{TH}">也接受</th></tr>
+    <tr><th style="{TH}">表格</th><th style="{TH}">名称</th><th style="{TH}">类型</th><th style="{TH}">原/当前</th><th style="{TH}">新版本</th><th style="{TH}">也接受</th></tr>
     {rows}
   </table>
   <div style="padding:18px 22px;background:#f7f9fb;border-top:1px solid #eaeef2">
@@ -81,7 +81,11 @@ def build_html(changes: list[dict], site_url: str) -> str:
 
 def build_text(changes: list[dict], site_url: str) -> str:
     lines = [f"{len(changes)} 个表格版本有更新：", ""]
-    lines += [f"  {c['id']:<8} {c['from']} -> {c['to']}   {c['cn']}" for c in changes]
+    lines += [
+        f"  {c['id']:<8} {'已生效' if c.get('kind') == 'edition' else '预告'}  "
+        f"{c['from']} -> {c['to']}   {c['cn']}"
+        for c in changes
+    ]
     lines += ["", f"完整列表：{site_url}"]
     return "\n".join(lines)
 
