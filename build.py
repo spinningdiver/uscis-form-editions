@@ -168,6 +168,24 @@ def decorate(forms: list[dict], today: datetime) -> None:
         f["flag"] = "alert" if (fresh or f["soon"]) else ("warn" if f["also"] else "")
 
 
+def rebuild(notes: dict) -> tuple[list[dict], str]:
+    """不重新抓取，用现有快照 + 最新 notes.yaml 重新生成网页。
+
+    复核任务跑在无法访问 uscis.gov 的环境里：它改完中文要点后需要让网页
+    跟着变，但不能重跑抓取。这里只重新套用 notes.yaml 的三个字段。
+    """
+    data = json.loads((DATA / "forms.json").read_text(encoding="utf-8"))
+    forms = data["forms"]
+    for f in forms:
+        note = notes.get(f["id"]) or {}
+        if note.get("cn"):
+            f["cn"] = note["cn"]
+        f["note"] = (note.get("note") or "").strip()
+        # up 由抓取时的公告推导，这里沿用；notes.yaml 仍可手工补一个 soon
+        f["soon"] = bool(f.get("up")) or bool(note.get("soon"))
+    return forms, data.get("generated_at", "")
+
+
 def render(forms: list[dict], checked_label: str) -> None:
     """把数据注入模板，写出 docs/index.html。"""
     template = (SITE / "template.html").read_text(encoding="utf-8")

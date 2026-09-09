@@ -7,9 +7,6 @@ venv/
 # 变更摘要为单次运行的临时产物，由 CI 读取后丢弃
 data/changes.md
 
-# 复核用的全量公告导出，每日重新生成
-data/audit-alerts.json
-
 # 本地预览稿，不参与发布
 preview/
 

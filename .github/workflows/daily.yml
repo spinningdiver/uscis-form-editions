@@ -1,14 +1,15 @@
-name: 检查 USCIS 表格版本（手动后备）
+name: 每日抓取 USCIS 表格版本
 
-# 每日检查已交给云端的 Claude 复核任务，这里不再定时运行。
+# 抓取由本工作流负责 —— 云端复核环境的出口策略禁止访问 www.uscis.gov，
+# 只有 GitHub 的 runner 能拿到数据。
 #
-# 原因：GitHub 的定时任务在高峰期会延迟几十分钟，极端情况下整次跳过。
-# 两边各跑一次会互相撞车 —— 复核任务可能读到尚未更新的数据，
-# 或与本工作流的提交产生冲突。全天只保留一个执行者，竞态就不存在。
-#
-# 本工作流保留为后备：云端任务出问题时，可在 Actions 页面手动触发，
-# 拿到当天的数据（只是没有中文要点的复核与更新）。
+# 抓完推送后，push 事件会唤醒云端的 Claude 复核任务去读这批数据。
+# 用事件触发而不是固定时间差：GitHub 的定时任务在高峰期会延迟几十分钟，
+# 按时间约定必然产生竞态，按事件则永远是数据到位之后才开始复核。
 on:
+  schedule:
+    # 13:00 UTC = 美东夏令时 09:00 / 冬令时 08:00
+    - cron: "0 13 * * *"
   workflow_dispatch:
 
 permissions:
@@ -33,14 +34,15 @@ jobs:
       - run: pip install -r requirements.txt
 
       - name: 抓取并生成网页
-        run: python run.py --ci
+        # --audit 额外导出全部未筛选的公告，供云端复核任务阅读
+        run: python run.py --ci --audit
 
       - name: 提交结果
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
-          git diff --staged --quiet || git commit -m "chore: 手动检查 $(date -u +%Y-%m-%d)"
+          git diff --staged --quiet || git commit -m "chore: 每日抓取 $(date -u +%Y-%m-%d)"
           git push
 
       - name: 版本有变化时开 Issue 通知

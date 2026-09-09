@@ -88,7 +88,32 @@ def write_changes_md(changes: list[dict], path: Path) -> None:
     path.write_text("\n".join(lines), encoding="utf-8", newline="\n")
 
 
+def rebuild_only() -> int:
+    """--rebuild：不抓取，用现有快照重新生成网页。供无法访问 uscis.gov 的
+    复核环境在修改 notes.yaml 之后使用。"""
+    forms, generated_at = build.rebuild(build.load_notes())
+    try:
+        stamp = datetime.fromisoformat(generated_at)
+    except ValueError:
+        stamp = datetime.now(build.EASTERN)
+
+    build.decorate(forms, stamp)
+    build.render(forms, stamp.strftime("%Y-%m-%d %H:%M ET"))
+
+    # 写回快照：notes.yaml 的改动要留在里面，否则下次比对会来回抖动
+    (build.DATA / "forms.json").write_text(
+        json.dumps({"generated_at": generated_at, "forms": forms}, ensure_ascii=False, indent=1),
+        encoding="utf-8",
+        newline="\n",
+    )
+    print(f"已用 {generated_at} 的快照重新生成网页（未抓取）")
+    return 0
+
+
 def main() -> int:
+    if "--rebuild" in sys.argv:
+        return rebuild_only()
+
     ci = "--ci" in sys.argv
     now = datetime.now(build.EASTERN)
 
