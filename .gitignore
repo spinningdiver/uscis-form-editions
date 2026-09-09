@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+
+# 变更摘要为单次运行的临时产物，由 CI 读取后丢弃
+data/changes.md
+
+# 本地预览稿，不参与发布
+preview/

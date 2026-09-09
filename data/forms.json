@@ -1,0 +1,282 @@
+{
+ "generated_at": "2026-09-09T05:44:23-04:00",
+ "forms": [
+  {
+   "id": "I-485",
+   "cn": "调整身份申请（境内转绿卡）",
+   "en": "Application to Register Permanent Residence or Adjust Status",
+   "cur": "09/04/26",
+   "also": [
+    "01/20/25"
+   ],
+   "raw": "09/04/26. We will also accept the 01/20/25 edition. You can find the edition date at the bottom of the page on the form and instructions.",
+   "note": "USCIS 已发布 09/18/26 新版以配合 Public Charge 最终规则，且**不设过渡宽限期**。 自 09/18/26 起旧版将被退件，请及时切换。",
+   "soon": true,
+   "status": "ok",
+   "error": "",
+   "changed": false,
+   "last_changed": "",
+   "tags": [
+    "soon",
+    "multi"
+   ],
+   "flag": "alert"
+  },
+  {
+   "id": "I-130",
+   "cn": "外籍亲属移民申请",
+   "en": "Petition for Alien Relative",
+   "cur": "04/01/24",
+   "also": [],
+   "raw": "04/01/24. You can find the edition date at the bottom of the page on the form and instructions.",
+   "note": "",
+   "soon": false,
+   "status": "ok",
+   "error": "",
+   "changed": false,
+   "last_changed": "",
+   "tags": [
+    "stable"
+   ],
+   "flag": ""
+  },
+  {
+   "id": "I-131",
+   "cn": "旅行证件／回美证／人道假释申请",
+   "en": "Application for Travel Documents, Parole Documents, and Arrival/Departure Records",
+   "cur": "01/20/25",
+   "also": [],
+   "raw": "01/20/25. You can find the edition date at the bottom of the page on the form and instructions.",
+   "note": "",
+   "soon": false,
+   "status": "ok",
+   "error": "",
+   "changed": false,
+   "last_changed": "",
+   "tags": [
+    "stable"
+   ],
+   "flag": ""
+  },
+  {
+   "id": "I-765",
+   "cn": "工作许可（工卡）申请",
+   "en": "Application for Employment Authorization",
+   "cur": "08/21/25",
+   "also": [],
+   "raw": "08/21/25. You can find the edition date at the bottom of the page on the form and instructions.",
+   "note": "",
+   "soon": false,
+   "status": "ok",
+   "error": "",
+   "changed": false,
+   "last_changed": "",
+   "tags": [
+    "stable"
+   ],
+   "flag": ""
+  },
+  {
+   "id": "I-864",
+   "cn": "经济担保书",
+   "en": "Affidavit of Support Under Section 213A of the INA",
+   "cur": "08/24/26",
+   "also": [],
+   "raw": "08/24/26. You can find the edition date at the bottom of the page on the form and instructions.",
+   "note": "",
+   "soon": false,
+   "status": "ok",
+   "error": "",
+   "changed": false,
+   "last_changed": "",
+   "tags": [
+    "stable"
+   ],
+   "flag": ""
+  },
+  {
+   "id": "I-140",
+   "cn": "外籍劳工移民申请",
+   "en": "Immigrant Petition for Alien Workers",
+   "cur": "06/07/24",
+   "also": [],
+   "raw": "06/07/24. You can find the edition date at the bottom of the page on the form and instructions.",
+   "note": "",
+   "soon": false,
+   "status": "ok",
+   "error": "",
+   "changed": false,
+   "last_changed": "",
+   "tags": [
+    "stable"
+   ],
+   "flag": ""
+  },
+  {
+   "id": "I-129",
+   "cn": "非移民劳工申请（H-1B／L／O 等）",
+   "en": "Petition for a Nonimmigrant Worker",
+   "cur": "02/27/26",
+   "also": [],
+   "raw": "02/27/26. You can find the edition date at the bottom of the page on the form and instructions.",
+   "note": "",
+   "soon": false,
+   "status": "ok",
+   "error": "",
+   "changed": false,
+   "last_changed": "",
+   "tags": [
+    "stable"
+   ],
+   "flag": ""
+  },
+  {
+   "id": "I-539",
+   "cn": "非移民身份延期／转换申请",
+   "en": "Application to Extend/Change Nonimmigrant Status",
+   "cur": "08/28/24",
+   "also": [],
+   "raw": "08/28/24. You can find the edition date at the bottom of the page on the form and instructions.",
+   "note": "",
+   "soon": false,
+   "status": "ok",
+   "error": "",
+   "changed": false,
+   "last_changed": "",
+   "tags": [
+    "stable"
+   ],
+   "flag": ""
+  },
+  {
+   "id": "I-90",
+   "cn": "绿卡更换／补发申请",
+   "en": "Application to Replace Permanent Resident Card (Green Card)",
+   "cur": "01/20/25",
+   "also": [],
+   "raw": "01/20/25. You can find the edition date at the bottom of the page on the form and instructions.",
+   "note": "",
+   "soon": false,
+   "status": "ok",
+   "error": "",
+   "changed": false,
+   "last_changed": "",
+   "tags": [
+    "stable"
+   ],
+   "flag": ""
+  },
+  {
+   "id": "I-751",
+   "cn": "解除绿卡条件限制申请",
+   "en": "Petition to Remove Conditions on Residence",
+   "cur": "04/01/24",
+   "also": [],
+   "raw": "04/01/24. You can find the edition date at the bottom of the page on the form and instructions.",
+   "note": "",
+   "soon": false,
+   "status": "ok",
+   "error": "",
+   "changed": false,
+   "last_changed": "",
+   "tags": [
+    "stable"
+   ],
+   "flag": ""
+  },
+  {
+   "id": "N-400",
+   "cn": "入籍归化申请",
+   "en": "Application for Naturalization",
+   "cur": "01/20/25",
+   "also": [],
+   "raw": "01/20/25. You can find the edition date at the bottom of the page on the form and instructions.",
+   "note": "",
+   "soon": false,
+   "status": "ok",
+   "error": "",
+   "changed": false,
+   "last_changed": "",
+   "tags": [
+    "stable"
+   ],
+   "flag": ""
+  },
+  {
+   "id": "I-821D",
+   "cn": "DACA 童年入境者暂缓遣返",
+   "en": "Consideration of Deferred Action for Childhood Arrivals",
+   "cur": "01/20/25",
+   "also": [],
+   "raw": "01/20/25. You can find the edition date at the bottom of the page on the form and instructions.",
+   "note": "",
+   "soon": false,
+   "status": "ok",
+   "error": "",
+   "changed": false,
+   "last_changed": "",
+   "tags": [
+    "stable"
+   ],
+   "flag": ""
+  },
+  {
+   "id": "I-693",
+   "cn": "移民体检与疫苗接种报告",
+   "en": "Report of Immigration Medical Examination and Vaccination Record",
+   "cur": "01/20/25",
+   "also": [
+    "03/09/23"
+   ],
+   "raw": "01/20/25. If the civil surgeon signs your form on or before July 2, 2025, you must use the 03/09/23 or the 01/20/25 edition. If the civil surgeon signs your form July 3, 2025 or later, USCIS will accept only the 01/20/25 edition. You can find the edition date at the bottom of the page on the form and instructions.",
+   "note": "可用版本取决于**民事外科医生的签字日期**，而非提交日期： 2025 年 7 月 2 日（含）之前签字，03/09/23 与 01/20/25 两版均可； 7 月 3 日及以后签字，仅接受 01/20/25 版。",
+   "soon": false,
+   "status": "ok",
+   "error": "",
+   "changed": false,
+   "last_changed": "",
+   "tags": [
+    "multi"
+   ],
+   "flag": "warn"
+  },
+  {
+   "id": "I-134",
+   "cn": "经济支持声明",
+   "en": "Declaration of Financial Support",
+   "cur": "01/20/25",
+   "also": [],
+   "raw": "01/20/25. You can find the edition date at the bottom of the page on the form and instructions.",
+   "note": "",
+   "soon": false,
+   "status": "ok",
+   "error": "",
+   "changed": false,
+   "last_changed": "",
+   "tags": [
+    "stable"
+   ],
+   "flag": ""
+  },
+  {
+   "id": "G-28",
+   "cn": "律师／授权代表出庭通知",
+   "en": "Notice of Entry of Appearance as Attorney or Accredited Representative",
+   "cur": "09/17/18",
+   "also": [
+    "05/23/18"
+   ],
+   "raw": "09/17/18. We will publish a new edition of this form soon. In the meantime, you may continue using the 09/17/18 and 05/23/18 editions despite the expiration date. You can find the edition date at the bottom of the page on the form and instructions.",
+   "note": "USCIS 表示新版**即将发布**。在此之前，09/17/18 与 05/23/18 两版仍可使用， 表格上印的过期日期可忽略。新版发布后本页会自动提醒。",
+   "soon": false,
+   "status": "ok",
+   "error": "",
+   "changed": false,
+   "last_changed": "",
+   "tags": [
+    "multi"
+   ],
+   "flag": "warn"
+  }
+ ]
+}

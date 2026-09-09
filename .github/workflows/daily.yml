@@ -1,0 +1,54 @@
+name: 每日检查 USCIS 表格版本
+
+on:
+  schedule:
+    # 13:00 UTC = 美东夏令时 09:00 / 冬令时 08:00
+    # GitHub 的定时任务在高峰期可能延迟几十分钟，属正常现象
+    - cron: "0 13 * * *"
+  workflow_dispatch: # 支持在 Actions 页面手动触发
+
+permissions:
+  contents: write # 提交更新后的数据与网页
+  issues: write # 版本变化时开 Issue 通知
+
+concurrency:
+  group: daily-check
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: 抓取并生成网页
+        run: python run.py --ci
+
+      - name: 提交结果
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          # 即使没有版本变化，last_checked.json 每天也会变，
+          # 保证仓库天天有提交 —— 否则 GitHub 会在 60 天无活动后停用本工作流
+          git diff --staged --quiet || git commit -m "chore: 每日检查 $(date -u +%Y-%m-%d)"
+          git push
+
+      - name: 版本有变化时开 Issue 通知
+        if: hashFiles('data/changes.md') != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # 标签可能尚未创建，--force 让这一步可重复执行
+          gh label create "版本更新" --color D93F0B --force
+          gh issue create \
+            --title "$(head -1 data/changes.md)" \
+            --body-file <(tail -n +2 data/changes.md) \
+            --label "版本更新"

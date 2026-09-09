@@ -1,0 +1,399 @@
+<title>USCIS 表格版本速查</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#F1F3F6; --surface:#FFFFFF; --surface-2:#F7F9FB;
+  --ink:#131A21; --ink-2:#3D4954; --muted:#66727E; --line:#DCE2E8; --line-2:#EAEEF2;
+  --accent:#17557F; --accent-soft:#E3EDF5;
+  --warn:#8A5A0B; --warn-soft:#FAF0DC;
+  --alert:#9E3527; --alert-soft:#FAE7E3;
+  --ok:#2C6349; --ok-soft:#E4F0EA;
+  --shadow:0 1px 2px rgba(19,26,33,.05), 0 8px 24px -16px rgba(19,26,33,.22);
+  --sans:"Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --serif:"Noto Serif SC","Songti SC",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#10141A; --surface:#171C23; --surface-2:#1D242C;
+    --ink:#E5EAF0; --ink-2:#C2CCD6; --muted:#8E9BA8; --line:#2A333D; --line-2:#222A33;
+    --accent:#7FB2D6; --accent-soft:#1B2C39;
+    --warn:#D9A758; --warn-soft:#2E2617;
+    --alert:#E28575; --alert-soft:#33201C;
+    --ok:#6FBF95; --ok-soft:#16281F;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#10141A; --surface:#171C23; --surface-2:#1D242C;
+  --ink:#E5EAF0; --ink-2:#C2CCD6; --muted:#8E9BA8; --line:#2A333D; --line-2:#222A33;
+  --accent:#7FB2D6; --accent-soft:#1B2C39;
+  --warn:#D9A758; --warn-soft:#2E2617;
+  --alert:#E28575; --alert-soft:#33201C;
+  --ok:#6FBF95; --ok-soft:#16281F;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+}
+
+*{box-sizing:border-box}
+body{
+  background:var(--ground); color:var(--ink);
+  font-family:var(--sans); font-size:15px; line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px; margin:0 auto; padding:32px 20px 64px; display:flex; flex-direction:column; gap:20px}
+
+/* ---------- header ---------- */
+header{display:flex; flex-direction:column; gap:6px; margin-bottom:2px}
+.eyebrow{
+  font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--muted);
+}
+h1{
+  font-family:var(--serif); font-weight:600; font-size:30px; line-height:1.3;
+  margin:0; text-wrap:balance; letter-spacing:.01em;
+}
+.lede{margin:0; color:var(--ink-2); max-width:60ch; font-size:14.5px}
+
+.statbar{
+  display:flex; flex-wrap:wrap; gap:8px 22px; align-items:baseline;
+  padding:12px 16px; background:var(--surface); border:1px solid var(--line);
+  border-radius:8px; box-shadow:var(--shadow);
+}
+.stat{display:flex; align-items:baseline; gap:7px; font-size:13px; color:var(--muted)}
+.stat b{
+  font-family:var(--mono); font-weight:600; font-size:16px; color:var(--ink);
+  font-variant-numeric:tabular-nums;
+}
+.stat .dot{width:7px; height:7px; border-radius:50%; display:inline-block; margin-right:1px}
+.stat.warn b{color:var(--warn)} .stat.warn .dot{background:var(--warn)}
+.stat.alert b{color:var(--alert)} .stat.alert .dot{background:var(--alert)}
+.statbar .spacer{flex:1 1 auto}
+.checked{font-size:12.5px; color:var(--muted); font-family:var(--mono); font-variant-numeric:tabular-nums}
+.checked .live{
+  display:inline-block; width:7px; height:7px; border-radius:50%;
+  background:var(--ok); margin-right:6px; vertical-align:1px;
+}
+
+/* ---------- toolbar ---------- */
+.toolbar{
+  position:sticky; top:0; z-index:20;
+  display:flex; flex-wrap:wrap; gap:10px; align-items:center;
+  padding:12px; background:var(--surface); border:1px solid var(--line);
+  border-radius:8px; box-shadow:var(--shadow);
+}
+.searchbox{position:relative; flex:1 1 260px; min-width:0}
+.searchbox svg{
+  position:absolute; left:11px; top:50%; transform:translateY(-50%);
+  width:15px; height:15px; color:var(--muted); pointer-events:none;
+}
+#q{
+  width:100%; padding:9px 32px 9px 33px; font-family:var(--sans); font-size:14px;
+  color:var(--ink); background:var(--surface-2);
+  border:1px solid var(--line); border-radius:6px;
+}
+#q::placeholder{color:var(--muted)}
+#q:focus{outline:2px solid var(--accent); outline-offset:1px; border-color:transparent}
+.clearq{
+  position:absolute; right:6px; top:50%; transform:translateY(-50%);
+  border:0; background:transparent; color:var(--muted); cursor:pointer;
+  font-size:16px; line-height:1; padding:4px 6px; border-radius:4px;
+}
+.clearq:hover{color:var(--ink)}
+.clearq[hidden]{display:none}
+
+.chips{display:flex; gap:6px; flex-wrap:wrap}
+.chip{
+  font-family:var(--sans); font-size:13px; padding:7px 13px; cursor:pointer;
+  background:transparent; color:var(--ink-2);
+  border:1px solid var(--line); border-radius:999px; white-space:nowrap;
+}
+.chip:hover{border-color:var(--muted)}
+.chip[aria-pressed="true"]{background:var(--accent); border-color:var(--accent); color:#fff; font-weight:500}
+:root[data-theme="dark"] .chip[aria-pressed="true"],
+:root:not([data-theme="light"]) .chip[aria-pressed="true"]{color:#0E141A}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .chip[aria-pressed="true"]{color:#fff}}
+.chip .n{font-family:var(--mono); font-size:11.5px; opacity:.75; margin-left:5px}
+.chip:focus-visible,#sort:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+#sort{
+  font-family:var(--sans); font-size:13px; padding:7px 9px; color:var(--ink-2);
+  background:var(--surface-2); border:1px solid var(--line); border-radius:6px; cursor:pointer;
+}
+
+/* ---------- list ---------- */
+.list{
+  background:var(--surface); border:1px solid var(--line);
+  border-radius:8px; box-shadow:var(--shadow); overflow:hidden;
+}
+.lhead{
+  display:grid; grid-template-columns:104px minmax(0,1fr) 118px 132px 84px;
+  gap:14px; align-items:center;
+  padding:9px 16px 9px 19px; border-bottom:1px solid var(--line);
+  background:var(--surface-2);
+  font-family:var(--mono); font-size:10.5px; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--muted);
+}
+.lhead .r{text-align:right}
+
+.row{border-bottom:1px solid var(--line-2)}
+.row:last-child{border-bottom:0}
+.row summary{
+  display:grid; grid-template-columns:104px minmax(0,1fr) 118px 132px 84px;
+  gap:14px; align-items:center;
+  padding:13px 16px 13px 16px; border-left:3px solid transparent;
+  cursor:pointer; list-style:none;
+}
+.row summary::-webkit-details-marker{display:none}
+.row summary:hover{background:var(--surface-2)}
+.row summary:focus-visible{outline:2px solid var(--accent); outline-offset:-2px}
+.row[data-flag="warn"] summary{border-left-color:var(--warn)}
+.row[data-flag="alert"] summary{border-left-color:var(--alert)}
+
+.fid{
+  font-family:var(--mono); font-weight:600; font-size:15px; color:var(--ink);
+  letter-spacing:-.01em;
+}
+.names{min-width:0}
+.cn{display:block; font-size:14.5px; font-weight:500; color:var(--ink); line-height:1.4}
+.en{
+  display:block; font-size:11.5px; color:var(--muted); line-height:1.45; margin-top:2px;
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+}
+.ver{
+  font-family:var(--mono); font-weight:600; font-size:16px; color:var(--ink);
+  font-variant-numeric:tabular-nums; letter-spacing:-.02em;
+}
+.alsowrap{display:flex; flex-wrap:wrap; gap:4px}
+.also{
+  font-family:var(--mono); font-size:12px; color:var(--ink-2);
+  background:var(--surface-2); border:1px solid var(--line);
+  border-radius:4px; padding:1px 6px; font-variant-numeric:tabular-nums;
+}
+.none{color:var(--muted); font-size:12.5px}
+.tagcell{display:flex; justify-content:flex-end; gap:5px; flex-wrap:wrap}
+.tag{
+  font-size:11px; font-weight:500; padding:2px 8px; border-radius:999px;
+  border:1px solid transparent; white-space:nowrap; line-height:1.55;
+}
+.tag.upd{background:var(--alert-soft); color:var(--alert); border-color:var(--alert)}
+.tag.multi{background:var(--warn-soft); color:var(--warn); border-color:var(--warn-soft)}
+.tag.soon{background:var(--warn-soft); color:var(--warn); border-color:var(--warn)}
+.tag.stable{background:var(--ok-soft); color:var(--ok); border-color:var(--ok-soft)}
+
+.detail{
+  padding:2px 18px 18px 19px; background:var(--surface-2);
+  border-top:1px solid var(--line-2);
+  display:flex; flex-direction:column; gap:12px;
+}
+.detail .dlabel{
+  font-family:var(--mono); font-size:10.5px; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--muted); margin:12px 0 5px;
+}
+.raw{
+  font-size:13px; line-height:1.7; color:var(--ink-2); margin:0;
+  max-width:76ch; background:var(--surface); border:1px solid var(--line);
+  border-left:2px solid var(--accent); border-radius:0 6px 6px 0; padding:11px 14px;
+}
+.raw b{font-family:var(--mono); font-weight:600; color:var(--ink); background:var(--accent-soft); padding:0 3px; border-radius:3px}
+.dnote{font-size:13px; color:var(--ink-2); margin:0; max-width:70ch}
+.dnote strong{color:var(--warn)}
+.dlinks{display:flex; gap:16px; flex-wrap:wrap; align-items:center}
+.dlinks a{
+  font-size:13px; color:var(--accent); text-decoration:none;
+  border-bottom:1px solid color-mix(in srgb, var(--accent) 35%, transparent); padding-bottom:1px;
+}
+.dlinks a:hover{border-bottom-color:var(--accent)}
+.dlinks a:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:2px}
+
+.empty{padding:44px 20px; text-align:center; color:var(--muted); font-size:14px}
+.empty b{display:block; color:var(--ink); font-size:15px; margin-bottom:5px; font-weight:500}
+
+/* ---------- legend + footer ---------- */
+.legend{
+  background:var(--surface); border:1px solid var(--line); border-radius:8px;
+  padding:16px 18px; box-shadow:var(--shadow);
+}
+.legend h2{
+  font-family:var(--mono); font-size:10.5px; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--muted); margin:0 0 12px; font-weight:500;
+}
+.legend ul{list-style:none; margin:0; padding:0; display:grid; gap:9px;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.legend li{display:flex; gap:10px; align-items:flex-start; font-size:13px; color:var(--ink-2)}
+.legend li .tag{flex:0 0 auto; margin-top:1px}
+
+footer{
+  font-size:12.5px; color:var(--muted); line-height:1.75;
+  display:flex; flex-direction:column; gap:7px; padding:0 2px;
+}
+footer a{color:var(--accent); text-decoration:none}
+footer a:hover{text-decoration:underline}
+footer .disc{border-left:2px solid var(--line); padding-left:11px; max-width:72ch}
+
+@media (max-width:760px){
+  .wrap{padding:22px 14px 48px}
+  h1{font-size:24px}
+  .lhead{display:none}
+  .row summary{grid-template-columns:1fr auto; gap:4px 12px; padding:13px 14px}
+  .fid{grid-column:1; font-size:14px}
+  .tagcell{grid-column:2; grid-row:1}
+  .names{grid-column:1 / -1; grid-row:2}
+  .ver{grid-column:1; grid-row:3; font-size:19px; margin-top:4px}
+  .alsowrap,.none{grid-column:2; grid-row:3; justify-content:flex-end; align-self:end; text-align:right}
+  .toolbar{padding:10px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">USCIS Form Edition Tracker · 内部参考</div>
+    <h1>移民表格版本速查</h1>
+  </header>
+
+  <div class="statbar">
+    <span class="stat"><b id="s-total">15</b> 追踪表格</span>
+    <span class="stat warn"><span class="dot"></span><b id="s-multi">3</b> 多版本并存</span>
+    <span class="stat alert"><span class="dot"></span><b id="s-soon">1</b> 即将强制换版</span>
+    <span class="spacer"></span>
+    <span class="checked"><span class="live"></span>最后检查 {{CHECKED}}</span>
+  </div>
+
+  <div class="toolbar">
+    <div class="searchbox">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
+      <input id="q" type="search" autocomplete="off" placeholder="搜索表格号或名称：485 / i-765 / 入籍 / employment">
+      <button class="clearq" id="clearq" hidden aria-label="清除搜索">×</button>
+    </div>
+    <div class="chips" role="group" aria-label="筛选">
+      <button class="chip" data-f="all" aria-pressed="true">全部<span class="n" id="c-all">15</span></button>
+      <button class="chip" data-f="attn" aria-pressed="false">需注意<span class="n" id="c-attn">3</span></button>
+      <button class="chip" data-f="multi" aria-pressed="false">多版本<span class="n" id="c-multi">3</span></button>
+    </div>
+    <select id="sort" aria-label="排序方式">
+      <option value="attn">需注意优先</option>
+      <option value="id">按表格号</option>
+      <option value="date">按版本日期（新→旧）</option>
+    </select>
+  </div>
+
+  <div class="list">
+    <div class="lhead">
+      <span>表格</span><span>名称</span><span>当前版本</span><span>也接受</span><span class="r">状态</span>
+    </div>
+    <div id="rows"></div>
+  </div>
+
+  <section class="legend">
+    <h2>状态标记说明</h2>
+    <ul>
+      <li><span class="tag upd">有更新</span><span>与上次检查相比版本号发生变化。系统会同时给管理员发通知，标记保留 30 天。</span></li>
+      <li><span class="tag soon">即将换版</span><span>USCIS 已公布新版本及强制生效日期，需提前准备。</span></li>
+      <li><span class="tag multi">多版本</span><span>旧版本目前仍被受理，但建议一律使用最新版。</span></li>
+      <li><span class="tag stable">单一版本</span><span>仅接受当前版本，无其他可用版本。</span></li>
+    </ul>
+  </section>
+
+  <footer>
+    <div>日期格式 mm/dd/yy · 以 <a href="https://www.uscis.gov/forms/all-forms" target="_blank" rel="noopener">USCIS 官网</a> 为准，本页仅供内部参考</div>
+  </footer>
+</div>
+
+<script>
+const FORMS = {{FORMS_JSON}};
+
+const TAGTEXT = {upd:"有更新", soon:"即将换版", multi:"多版本", stable:"单一版本"};
+const rowsEl = document.getElementById("rows");
+const qEl = document.getElementById("q");
+const clearBtn = document.getElementById("clearq");
+const sortEl = document.getElementById("sort");
+let filter = "all";
+
+const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const norm = s => s.toLowerCase().replace(/[-\s]/g, "");
+const dnum = d => { const [m,dd,y] = d.split("/"); return +("20"+y+m+dd); };
+const isAttn = f => f.flag === "alert" || f.flag === "warn";
+
+document.getElementById("s-total").textContent = FORMS.length;
+document.getElementById("s-multi").textContent = FORMS.filter(f => f.also.length).length;
+document.getElementById("s-soon").textContent = FORMS.filter(f => f.tags.includes("soon")).length;
+document.getElementById("c-all").textContent = FORMS.length;
+document.getElementById("c-attn").textContent = FORMS.filter(isAttn).length;
+document.getElementById("c-multi").textContent = FORMS.filter(f => f.also.length).length;
+
+function markNote(t){
+  return esc(t).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+}
+function markRaw(t, f){
+  let h = esc(t);
+  [f.cur, ...f.also].forEach(d => { h = h.split(d).join("<b>" + d + "</b>"); });
+  return h;
+}
+
+function render(){
+  const q = norm(qEl.value.trim());
+  clearBtn.hidden = !qEl.value;
+
+  let list = FORMS.filter(f => {
+    if (filter === "attn" && !isAttn(f)) return false;
+    if (filter === "multi" && !f.also.length) return false;
+    if (!q) return true;
+    return norm(f.id).includes(q) || norm(f.en).includes(q) || f.cn.includes(qEl.value.trim());
+  });
+
+  const mode = sortEl.value;
+  list = list.slice().sort((a, b) => {
+    if (mode === "id") return a.id.localeCompare(b.id, "en", {numeric:true});
+    if (mode === "date") return dnum(b.cur) - dnum(a.cur);
+    const rank = f => f.flag === "alert" ? 0 : f.flag === "warn" ? 1 : 2;
+    return rank(a) - rank(b) || a.id.localeCompare(b.id, "en", {numeric:true});
+  });
+
+  if (!list.length){
+    rowsEl.innerHTML = '<div class="empty"><b>没有匹配的表格</b>试试表格号（如 485、I-765）或中英文名称关键词</div>';
+    return;
+  }
+
+  rowsEl.innerHTML = list.map(f => `
+    <details class="row" data-flag="${f.flag}">
+      <summary>
+        <span class="fid">${esc(f.id)}</span>
+        <span class="names">
+          <span class="cn">${esc(f.cn)}</span>
+          <span class="en" title="${esc(f.en)}">${esc(f.en)}</span>
+        </span>
+        <span class="ver">${esc(f.cur)}</span>
+        ${f.also.length
+          ? `<span class="alsowrap">${f.also.map(d => `<span class="also">${esc(d)}</span>`).join("")}</span>`
+          : `<span class="none">—</span>`}
+        <span class="tagcell">${f.tags.map(t => `<span class="tag ${t}">${TAGTEXT[t]}</span>`).join("")}</span>
+      </summary>
+      <div class="detail">
+        ${f.note ? `<div><div class="dlabel">要点</div><p class="dnote">${markNote(f.note)}</p></div>` : ""}
+        <div><div class="dlabel">USCIS 官网原文</div><p class="raw">${markRaw(f.raw, f)}</p></div>
+        <div class="dlinks">
+          <a href="https://www.uscis.gov/${f.id.toLowerCase()}" target="_blank" rel="noopener">官网表格页 ↗</a>
+          <a href="https://www.uscis.gov/sites/default/files/document/forms/${f.id.toLowerCase()}.pdf" target="_blank" rel="noopener">表格 PDF ↗</a>
+          <a href="https://www.uscis.gov/sites/default/files/document/forms/${f.id.toLowerCase()}instr.pdf" target="_blank" rel="noopener">填写说明 PDF ↗</a>
+        </div>
+      </div>
+    </details>`).join("");
+}
+
+qEl.addEventListener("input", render);
+clearBtn.addEventListener("click", () => { qEl.value = ""; qEl.focus(); render(); });
+sortEl.addEventListener("change", render);
+document.querySelectorAll(".chip").forEach(c => {
+  c.addEventListener("click", () => {
+    filter = c.dataset.f;
+    document.querySelectorAll(".chip").forEach(x => x.setAttribute("aria-pressed", String(x === c)));
+    render();
+  });
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "/" && document.activeElement !== qEl){ e.preventDefault(); qEl.focus(); }
+  if (e.key === "Escape" && document.activeElement === qEl){ qEl.value = ""; render(); }
+});
+render();
+</script>
