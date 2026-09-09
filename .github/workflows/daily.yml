@@ -52,3 +52,9 @@ jobs:
             --title "$(head -1 data/changes.md)" \
             --body-file <(tail -n +2 data/changes.md) \
             --label "版本更新"
+
+      - name: 版本有变化时发邮件
+        if: hashFiles('data/changes.md') != ''
+        env:
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+        run: python notify.py

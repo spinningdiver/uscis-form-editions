@@ -1,0 +1,9 @@
+# 邮件通知配置
+#
+# 发信密码不放这里，而是存在 GitHub 仓库的 Secrets 里（名为 GMAIL_APP_PASSWORD）。
+# 增减收件人只改这个文件，改完 push 即可生效。
+
+from: jayzhangdesign@gmail.com
+
+to:
+  - jzhang@dingbabb.com
