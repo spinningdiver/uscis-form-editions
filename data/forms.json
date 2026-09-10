@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-09T09:19:13-04:00",
+ "generated_at": "2026-09-10T09:19:46-04:00",
  "forms": [
   {
    "id": "I-485",
@@ -135,21 +135,27 @@
    "id": "I-129",
    "cn": "非移民劳工申请（H-1B／L／O 等）",
    "en": "Petition for a Nonimmigrant Worker",
-   "cur": "02/27/26",
-   "also": [],
-   "raw": "02/27/26. You can find the edition date at the bottom of the page on the form and instructions.",
-   "alerts": [],
+   "cur": "09/09/26",
+   "also": [
+    "02/27/26"
+   ],
+   "raw": "09/09/26. Starting Nov. 9, 2026, we will accept only the 09/09/26 edition. Until then, you can also use the 02/27/26 edition. You can find the edition date at the bottom of the page on the form and instructions.",
+   "alerts": [
+    "ALERT: On Sept. 9, 2026, we published a new edition of Form I-129, Petition for a Nonimmigrant Worker (edition date: 09/09/26), in connection with the 9-11 Response and Biometric Entry-Exit Fee for H-1B and L-1 Visas final rule which goes into effect on Sept. 9, 2026. Starting Nov. 9, 2026, we will accept only the 09/09/26 edition of Form I-129. Until then, you can also use the 02/27/26 edition. If you file Form I-129, please note that USCIS will: Accept the 02/27/26 edition of Form I-129 if it is postmarked or electronically submitted before Nov. 9, 2026; and Reject the 02/27/26 edition of Form I-129 if it is postmarked or electronically submitted on or after Nov. 9, 2026."
+   ],
    "up": "",
    "note": "",
    "soon": false,
    "status": "ok",
    "error": "",
-   "changed": false,
-   "last_changed": "",
+   "changed": true,
+   "last_changed": "2026-09-10",
+   "prev_cur": "02/27/26",
    "tags": [
-    "stable"
+    "upd",
+    "multi"
    ],
-   "flag": ""
+   "flag": "alert"
   },
   {
    "id": "I-539",
