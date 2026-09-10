@@ -56,6 +56,10 @@ def merge(records: list[dict], notes: dict) -> list[dict]:
         cur = dates[0] if dates else ""
         # 当前版号常在原文里重复出现（如 I-693 的条件说明），去重后还要把它本身排除
         also = [d for d in dict.fromkeys(dates[1:]) if d != cur]
+        # 有的表格只说「也接受旧版」而不给日期（如 G-1450："We will also accept
+        # prior editions"），提不出日期就会被误标为单一版本
+        if not also and re.search(r"accept (all )?(prior|previous) editions", rec.get("raw", ""), re.I):
+            also = ["全部旧版"]
 
         # 公告里出现、且晚于当前版本的日期 = 尚未生效的新版。
         # 必须比日期大小：公告里也会提到仍被接受的旧版

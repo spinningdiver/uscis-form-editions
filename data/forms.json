@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-09-10T09:19:46-04:00",
+ "generated_at": "2026-09-10T13:10:06-04:00",
  "forms": [
   {
    "id": "I-485",
@@ -29,14 +29,14 @@
   },
   {
    "id": "I-130",
-   "cn": "外籍亲属移民申请",
+   "cn": "外籍亲属移民申请（含 I-130A）",
    "en": "Petition for Alien Relative",
    "cur": "04/01/24",
    "also": [],
    "raw": "04/01/24. You can find the edition date at the bottom of the page on the form and instructions.",
    "alerts": [],
    "up": "",
-   "note": "",
+   "note": "I-130A（配偶受益人补充信息表）没有独立的官网页面，与 I-130 同在一个页面， 共用该页的 Edition Date 栏目。",
    "soon": false,
    "status": "ok",
    "error": "",
@@ -148,7 +148,7 @@
    "soon": false,
    "status": "ok",
    "error": "",
-   "changed": true,
+   "changed": false,
    "last_changed": "2026-09-10",
    "prev_cur": "02/27/26",
    "tags": [
@@ -322,6 +322,234 @@
     "multi"
    ],
    "flag": "warn"
+  },
+  {
+   "id": "I-129F",
+   "cn": "未婚夫（妻）签证申请",
+   "en": "Petition for Alien Fiancé(e)",
+   "cur": "01/20/25",
+   "also": [],
+   "raw": "01/20/25. You can find the edition date at the bottom of the page on the form and instructions.",
+   "alerts": [],
+   "up": "",
+   "note": "",
+   "soon": false,
+   "status": "ok",
+   "error": "",
+   "changed": false,
+   "last_changed": "",
+   "tags": [
+    "stable"
+   ],
+   "flag": ""
+  },
+  {
+   "id": "G-1145",
+   "cn": "受理电子通知申请",
+   "en": "E-Notification of Application/Petition Acceptance",
+   "cur": "09/26/14",
+   "also": [],
+   "raw": "09/26/14. You can also use previous editions. You can find the edition date at the bottom of the page.",
+   "alerts": [],
+   "up": "",
+   "note": "",
+   "soon": false,
+   "status": "ok",
+   "error": "",
+   "changed": false,
+   "last_changed": "",
+   "tags": [
+    "stable"
+   ],
+   "flag": ""
+  },
+  {
+   "id": "G-1450",
+   "cn": "信用卡缴费授权",
+   "en": "Authorization for Credit Card Transactions",
+   "cur": "02/06/26",
+   "also": [
+    "全部旧版"
+   ],
+   "raw": "02/06/26. We will also accept prior editions. You can find the edition date at the bottom of the page on the form and instructions.",
+   "alerts": [
+    "ALERT: On Feb. 6, 2026, we published a new edition of Form G-1450, Authorization for Credit Card Transactions. The new edition, 02/06/26, includes: An updated DHS Privacy Notice in the Form Instructions; and A Card Verification Value (CVV) field on the fillable form. This field is not required for USCIS processing but may be used by other DHS components. USCIS will continue to accept prior editions of Form G-1450."
+   ],
+   "up": "",
+   "note": "**官网接受所有旧版**。02/06/26 新版只是更新了隐私声明、增加了 CVV 栏 （USCIS 处理时不要求填写），旧版照常可用。",
+   "soon": false,
+   "status": "ok",
+   "error": "",
+   "changed": false,
+   "last_changed": "",
+   "tags": [
+    "multi"
+   ],
+   "flag": "warn"
+  },
+  {
+   "id": "I-907",
+   "cn": "加急处理申请",
+   "en": "Request for Premium Processing Service",
+   "cur": "04/01/24",
+   "also": [],
+   "raw": "04/01/24. You can find the edition date at the bottom of the page on the form and instructions.",
+   "alerts": [],
+   "up": "",
+   "note": "",
+   "soon": false,
+   "status": "ok",
+   "error": "",
+   "changed": false,
+   "last_changed": "",
+   "tags": [
+    "stable"
+   ],
+   "flag": ""
+  },
+  {
+   "id": "I-589",
+   "cn": "庇护及暂缓遣返申请",
+   "en": "Application for Asylum and for Withholding of Removal",
+   "cur": "07/28/26",
+   "also": [],
+   "raw": "07/28/26. You can find the edition date at the bottom of the page on the form and instructions.",
+   "alerts": [],
+   "up": "",
+   "note": "",
+   "soon": false,
+   "status": "ok",
+   "error": "",
+   "changed": false,
+   "last_changed": "",
+   "tags": [
+    "stable"
+   ],
+   "flag": ""
+  },
+  {
+   "id": "I-918",
+   "cn": "U 签证申请（犯罪受害者）",
+   "en": "Petition for U Nonimmigrant Status",
+   "cur": "01/20/25",
+   "also": [],
+   "raw": "01/20/25. We will publish a new edition of this form soon. In the meantime, you may continue using the 01/20/25 edition despite the expiration date. You can find the edition date at the bottom of the page on the form and instructions.",
+   "alerts": [],
+   "up": "",
+   "note": "U visa 即此表。Supplement A（亲属）与 Supplement B（执法机关证明） 没有独立的官网页面。",
+   "soon": false,
+   "status": "ok",
+   "error": "",
+   "changed": false,
+   "last_changed": "",
+   "tags": [
+    "stable"
+   ],
+   "flag": ""
+  },
+  {
+   "id": "I-912",
+   "cn": "申请费减免",
+   "en": "Request for Fee Waiver",
+   "cur": "07/22/25",
+   "also": [
+    "全部旧版"
+   ],
+   "raw": "07/22/25. We will also accept prior editions (or a written request). You can find the edition date at the bottom of the page on the form and instructions.",
+   "alerts": [],
+   "up": "",
+   "note": "",
+   "soon": false,
+   "status": "ok",
+   "error": "",
+   "changed": false,
+   "last_changed": "",
+   "tags": [
+    "multi"
+   ],
+   "flag": "warn"
+  },
+  {
+   "id": "I-601",
+   "cn": "不可入境豁免申请",
+   "en": "Application for Waiver of Grounds of Inadmissibility",
+   "cur": "01/20/25",
+   "also": [],
+   "raw": "01/20/25. You can find the edition date at the bottom of the page on the form and instructions.",
+   "alerts": [],
+   "up": "",
+   "note": "",
+   "soon": false,
+   "status": "ok",
+   "error": "",
+   "changed": false,
+   "last_changed": "",
+   "tags": [
+    "stable"
+   ],
+   "flag": ""
+  },
+  {
+   "id": "I-601A",
+   "cn": "非法滞留临时豁免申请",
+   "en": "Application for Provisional Unlawful Presence Waiver",
+   "cur": "01/20/25",
+   "also": [],
+   "raw": "01/20/25. You can find the edition date at the bottom of the page on the form and instructions.",
+   "alerts": [],
+   "up": "",
+   "note": "",
+   "soon": false,
+   "status": "ok",
+   "error": "",
+   "changed": false,
+   "last_changed": "",
+   "tags": [
+    "stable"
+   ],
+   "flag": ""
+  },
+  {
+   "id": "I-864A",
+   "cn": "担保人与家庭成员合同",
+   "en": "Contract Between Sponsor and Household Member",
+   "cur": "08/24/26",
+   "also": [],
+   "raw": "08/24/26. You can find the edition date at the bottom of the page on the form and instructions.",
+   "alerts": [
+    "ALERT: On Aug. 31, 2026, USCIS published a new edition of Form I-864A, Contract Between Sponsor and Household Member (edition date: 08/24/26). USCIS is providing a 30-day grace period during which we will accept the 10/17/24 edition of Form I-864A. Beginning Oct. 1, 2026, we will only accept the 08/24/26 edition of Form I-864A. USCIS will not process any 10/17/24 edition of Form I-864A postmarked or electronically submitted on or after Oct. 1, 2026. USCIS does not reject Form I-485, Application to Register Permanent Residence or Adjust Status, if it is filed with a previous edition of Form I-864A. If an edition other than 08/24/26 is submitted on or after Oct. 1, 2026, USCIS will follow 8 CFR 103.2(b)(8) regarding the applicant's failure to submit the required initial evidence. Please note: The 08/24/26 edition of Form I-864A includes a privacy release that authorizes USCIS to request information from one or more consumer reporting agencies. If a sponsor has a credit or security freeze on their consumer or credit report file, USCIS may not be able to access the information necessary to assess the sufficiency of Form I-864A. To avoid any delays, a sponsor should expeditiously respond to any requests made to release a credit or security freeze."
+   ],
+   "up": "",
+   "note": "**旧版 10/17/24 的宽限期到 9 月 30 日为止**，自 10/01/26 起只接受 08/24/26 版。 附了旧版 I-864A 不会导致 I-485 被退件，但会按「缺少初始证据」处理。 新版含征信授权条款，担保人若对信用报告设有冻结，应尽早解除。",
+   "soon": false,
+   "status": "ok",
+   "error": "",
+   "changed": false,
+   "last_changed": "",
+   "tags": [
+    "stable"
+   ],
+   "flag": ""
+  },
+  {
+   "id": "I-360",
+   "cn": "美亚混血／鳏寡／特殊移民申请",
+   "en": "Petition for Amerasian, Widow(er), or Special Immigrant",
+   "cur": "01/20/25",
+   "also": [],
+   "raw": "01/20/25. You can find the edition date at the bottom of the page on the form and instructions.",
+   "alerts": [],
+   "up": "",
+   "note": "",
+   "soon": false,
+   "status": "ok",
+   "error": "",
+   "changed": false,
+   "last_changed": "",
+   "tags": [
+    "stable"
+   ],
+   "flag": ""
   }
  ]
 }
