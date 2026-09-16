@@ -73,6 +73,11 @@ def merge(records: list[dict], notes: dict) -> list[dict]:
             if d not in known and _dnum(d) > _dnum(cur)
         ]
 
+        # notes.yaml 里显式写了 up 就以它为准。公告里晚于当前版本的日期不一定是
+        # "即将启用的新版"——法院叫停换版时，那个版本号恰恰是不被接受的一版。
+        # 这种判断交给人，写 up: "" 即可去掉页面上的预告标记。
+        up = note["up"] if "up" in note else (upcoming[0] if upcoming else "")
+
         forms.append(
             {
                 "id": rec["id"],
@@ -82,7 +87,7 @@ def merge(records: list[dict], notes: dict) -> list[dict]:
                 "also": also,
                 "raw": rec.get("raw", ""),
                 "alerts": alerts,
-                "up": upcoming[0] if upcoming else "",
+                "up": up,
                 "note": (note.get("note") or "").strip(),
                 # 一般由公告自动判定；notes.yaml 里写 soon 可以手工补一个
                 "soon": bool(upcoming) or bool(note.get("soon")),
@@ -185,7 +190,8 @@ def rebuild(notes: dict) -> tuple[list[dict], str]:
         if note.get("cn"):
             f["cn"] = note["cn"]
         f["note"] = (note.get("note") or "").strip()
-        # up 由抓取时的公告推导，这里沿用；notes.yaml 仍可手工补一个 soon
+        if "up" in note:  # 人工覆盖，理由见 merge() 里的说明
+            f["up"] = note["up"] or ""
         f["soon"] = bool(f.get("up")) or bool(note.get("soon"))
     return forms, data.get("generated_at", "")
 

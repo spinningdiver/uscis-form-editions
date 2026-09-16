@@ -77,17 +77,17 @@
    "alerts": [
     "ALERT: On Sept.14, 2026, the U.S. District Court for the District of Massachusetts issued an order postponing the effective date of the final rule entitled \"Establishing a Fixed Time Period of Admission and an Extension of Stay Procedure for Nonimmigrant Academic Students, Exchange Visitors, and Representatives of Foreign Information Media,\" published at 91 Fed. Reg. 44976 (July 17, 2026). See Presidents' Alliance on Higher Education and Immigration, et al., v. DHS, 26-cv-13799 (D. Mass.). DHS is preliminarily enjoined from taking any further action to implement the final rule, and the effective date of the final rule is postponed pending further order of the court or resolution of the proceeding on the merits. DHS strongly disagrees with the court's order and if the order is lifted, will take measures to implement the final rule. Until such time, USCIS will proceed under the previous regulatory provisions. Pursuant to the Sept. 14, 2026, order, USCIS continues to accept the 08/28/24 edition of Form I-539 and 08/21/25 edition of Form I-765 and is not accepting the 09/15/26 edition of Forms I-539 and I-765."
    ],
-   "up": "09/15/26",
-   "note": "**换版已被法院叫停，现在仍用 08/21/25 版。** 2026 年 9 月 14 日，马萨诸塞州联邦地区法院下令暂缓那条学生／交流访客固定停留期 终局规则的生效（Presidents' Alliance on Higher Education and Immigration, et al., v. DHS, 26-cv-13799, D. Mass.），DHS 被初步禁止继续实施该规则。 USCIS 据此在页首公告里写明：**继续接受 08/21/25 版，不接受 09/15/26 版。** 原先那条「9 月 15 日起旧版一律退件、无宽限期」的公告已被这条法院公告取代，官网上已不存在。 注意本页仍标着「已公告新版 09/15/26」，那是自动识别从公告原文里提取的日期； 按 USCIS 现在的说法，该版本**恰恰是不被接受的那一版**，不要据此换版。 另需留意：DHS 明确表示不认同该裁定，若禁令解除会重新推进换版， 所以这个状态可能再次翻转。涉及诉讼的适用性问题请交主办律师判断， 交件前以官网页首公告原文为准。",
-   "soon": true,
+   "up": "",
+   "note": "换版已被法院叫停，现在仍用 08/21/25 版。 2026 年 9 月 14 日，马萨诸塞州联邦法院下达命令，推迟了「为非移民学术学生、 交流访客以及外国媒体代表确定固定的入境期限和延长的停留期限」这条最终规则的生效日期 （91 Fed. Reg. 44976，2026 年 7 月 17 日；案件为 Presidents' Alliance on Higher Education and Immigration v. DHS，案号 26-cv-13799，马萨诸塞州）。 DHS 被暂时禁止采取任何进一步行动实施该规则，直至法院下达进一步命令或案件实质问题得到解决。 原先那条「9 月 15 日起旧版一律退件、无宽限期」的公告已被这条法院公告取代，官网上已经删除。 根据这项命令，USCIS 仍接受 08/21/25 版，09/15/26 版则不再被接受。 另需留意：DHS 明确表示不认同该裁定，若禁令解除会重新推进换版，所以这个状态可能再次翻转。",
+   "soon": false,
    "status": "ok",
    "error": "",
    "changed": false,
    "last_changed": "",
    "tags": [
-    "soon"
+    "stable"
    ],
-   "flag": "alert"
+   "flag": ""
   },
   {
    "id": "I-864",
@@ -167,17 +167,17 @@
    "alerts": [
     "ALERT: On Sept.14, 2026, the U.S. District Court for the District of Massachusetts issued an order postponing the effective date of the final rule entitled \"Establishing a Fixed Time Period of Admission and an Extension of Stay Procedure for Nonimmigrant Academic Students, Exchange Visitors, and Representatives of Foreign Information Media,\" published at 91 Fed. Reg. 44976 (July 17, 2026). See Presidents' Alliance on Higher Education and Immigration, et al., v. DHS, 26-cv-13799 (D. Mass.). DHS is preliminarily enjoined from taking any further action to implement the final rule, and the effective date of the final rule is postponed pending further order of the court or resolution of the proceeding on the merits. DHS strongly disagrees with the court's order and if the order is lifted, will take measures to implement the final rule. Until such time, USCIS will proceed under the previous regulatory provisions. Pursuant to the Sept. 14, 2026, order, USCIS continues to accept the 08/28/24 edition of Form I-539 and 08/21/25 edition of Form I-765 and is not accepting the 09/15/26 edition of Forms I-539 and I-765."
    ],
-   "up": "08/21/25",
-   "note": "**换版已被法院叫停，现在仍用 08/28/24 版。** 2026 年 9 月 14 日，马萨诸塞州联邦地区法院下令暂缓那条学生／交流访客固定停留期 终局规则的生效（Presidents' Alliance on Higher Education and Immigration, et al., v. DHS, 26-cv-13799, D. Mass.），DHS 被初步禁止继续实施该规则。 USCIS 据此在页首公告里写明：**继续接受 08/28/24 版，不接受 09/15/26 版。** 原先那条「9 月 15 日起旧版一律退件、无宽限期」的公告已被这条法院公告取代，官网上已不存在。 **本页「已公告新版 08/21/25」是识别错误，请忽略**：08/21/25 是 I-765 的当前版本， 因为这条法院公告同时写了两张表的版本号，自动识别分不清哪个日期属于哪张表， 才把它当成了 I-539 的新版。I-539 目前没有任何可用的新版本。 另需留意：DHS 明确表示不认同该裁定，若禁令解除会重新推进换版， 所以这个状态可能再次翻转。涉及诉讼的适用性问题请交主办律师判断， 交件前以官网页首公告原文为准。 本表与 I-765 同属这条规则，两张表一起核对。",
-   "soon": true,
+   "up": "",
+   "note": "换版已被法院叫停，现在仍用 08/28/24 版。 2026 年 9 月 14 日，马萨诸塞州联邦法院下达命令，推迟了「为非移民学术学生、 交流访客以及外国媒体代表确定固定的入境期限和延长的停留期限」这条最终规则的生效日期 （91 Fed. Reg. 44976，2026 年 7 月 17 日；案件为 Presidents' Alliance on Higher Education and Immigration v. DHS，案号 26-cv-13799，马萨诸塞州）。 DHS 被暂时禁止采取任何进一步行动实施该规则，直至法院下达进一步命令或案件实质问题得到解决。 原先那条「9 月 15 日起旧版一律退件、无宽限期」的公告已被这条法院公告取代，官网上已经删除。 根据这项命令，USCIS 仍接受 08/28/24 版，09/15/26 版则不再被接受。 I-765 与本表同属这条规则，情况相同，两张表一起核对。 另需留意：DHS 明确表示不认同该裁定，若禁令解除会重新推进换版，所以这个状态可能再次翻转。",
+   "soon": false,
    "status": "ok",
    "error": "",
    "changed": false,
    "last_changed": "",
    "tags": [
-    "soon"
+    "stable"
    ],
-   "flag": "alert"
+   "flag": ""
   },
   {
    "id": "I-90",
