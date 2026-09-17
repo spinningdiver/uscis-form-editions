@@ -89,8 +89,11 @@ def merge(records: list[dict], notes: dict) -> list[dict]:
                 "alerts": alerts,
                 "up": up,
                 "note": (note.get("note") or "").strip(),
-                # 一般由公告自动判定；notes.yaml 里写 soon 可以手工补一个
-                "soon": bool(upcoming) or bool(note.get("soon")),
+                # 一般由公告自动判定；notes.yaml 里写 soon 可以手工补一个。
+                # 这里必须看 up 而不是 upcoming，否则 notes.yaml 写的 up: "" 只去掉了
+                # 日期、去不掉「即将换版」标记，每天抓取都会把人工覆盖顶回来
+                # （rebuild() 一直是按 up 判的，两条路径要一致）。
+                "soon": bool(up) or bool(note.get("soon")),
                 "status": rec.get("status", "error"),
                 "error": rec.get("error", ""),
             }
