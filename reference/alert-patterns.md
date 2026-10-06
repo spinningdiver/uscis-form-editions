@@ -67,6 +67,20 @@
 11 月 9 日，还有 35 天。上一轮记下的 fetch 陷阱**今天第二次兑现**：本次会话克隆
 下来的工作副本同样停在 09-30，落后 origin/main 八个提交，先 fetch 再判断
 「上次复核到哪天」才避免了重复改写 I-864／I-864A 那两条已经改好的要点。
+2026-10-06 复核：37 条公告自 10-01 起第六天逐字节未变（md5 仍是 `69e86c0f…`），
+命中仍为 8 条，无新类型，无过时的中文要点。按第四节第 1 点做的两条对账：
+「切换日已过但 `cur` 未变」未命中；「切换日已过、公告措辞仍是现在时」第六天
+仍命中 I-864／I-864A，公告原文一字未改，要点已在 10-01 改写到位，无需再动 ——
+第一节 A2 末尾那条观察至此连续印证六天。最近的硬性切换日仍是 I-129 的
+11 月 9 日，还有 34 天。前两轮记下的 fetch 陷阱**这次没有出现**：本次会话克隆下来的
+工作副本就停在 `main` 的最新提交（10-05 那条复核记录），无需追赶，
+可见那个陷阱取决于克隆时机而非必然，**但判断「上次复核到哪天」之前仍应 fetch 一次**。
+另记一个**抓取侧的观察**：10-05 当晚 22:58 那次 `schedule` 兜底触发（run 37385766056）
+在「兜底触发时，若当天已抓过则跳过」这一步就跳过了后续全部步骤，11 秒结束、
+`conclusion` 仍为 `success`。**这是设计行为不是失败**，但它意味着
+`conclusion: success` 并不保证真的抓过 —— 判断某一轮有没有抓取要看耗时或 `last_checked.json`
+的 `checked_at`，不能只看结论（本轮手动触发 run 37469860151 耗时 65 秒，26 个表格确实抓过）。
+
 本文记录观察到的类型、当前筛选规则的依据，以及后续自动化的着手点。
 
 数据来源：每个表格页面的 `div.messages__text` 节点，未经筛选的原文见仓库
@@ -342,6 +356,83 @@ I-90／I-129F／I-601A 三处）。所以公告条数会随表格数增长，
 | 2026-10-03 | 26 | 37 | 8 | 无（37 条公告自 10-01 起第三天逐字节未变，无新类型；A2 到期对账第三天仍命中 I-864／I-864A，要点无需再动） |
 | 2026-10-04 | 26 | 37 | 8 | 无（37 条公告自 10-01 起第四天逐字节未变，无新类型；A2 到期对账第四天仍命中 I-864／I-864A，要点无需再动） |
 | 2026-10-05 | 26 | 37 | 8 | 无（37 条公告自 10-01 起第五天逐字节未变，无新类型；A2 到期对账第五天仍命中 I-864／I-864A，要点无需再动） |
+| 2026-10-06 | 26 | 37 | 8 | 无（37 条公告自 10-01 起第六天逐字节未变，无新类型；A2 到期对账第六天仍命中 I-864／I-864A，要点无需再动） |
+
+2026-10-06 的核对方式：先 `git fetch`（本次工作副本已停在 `main` 最新提交，无需追赶），
+再触发抓取（run 37469860151，`workflow_dispatch`，conclusion `success`，耗时 65 秒），
+抓取 26/26 成功、`changed` 为 0、无 `error`、无 `stale`。按 md5 比对 `audit-alerts.json`，
+**自 10-01 起第六天逐字节相同**（仍是 `69e86c0f…`）；本轮抓取提交只动了三个文件，
+`forms.json` 只差 `generated_at` 一行、`docs/index.html` 只差页脚检查时间一行、
+`last_checked.json` 只差 `checked_at`（均已 `git diff` 逐行确认），`history.json` 未动，
+即 26 个表格的 `cur`／`also`／`up` 六天没动过。
+再独立重跑正反向扫描而非引用前几日的结论 —— 先用规则本身（含 `edition` 且含
+mm/dd/yy）对 37 条重跑并逐条与 `kept` 比对，**判定与 `kept` 完全一致，无一条错位**；
+未命中的 29 条中**含 mm/dd/yy 的 0 条**，含 `edition` 的仍是 I-90／I-129F／I-601A
+那条逐字相同的通用提交提醒（各 799 字符），均为泛指。
+反向扫描这次换了一张**以「另有一版存在、该换过去」但绕开 `edition` 一词为中心**的词表
+（`revision｜iteration｜new release｜now available｜newly available｜download the
+(new|revised|current|latest)｜latest (form|version|release)｜current (printing|release)｜
+variant｜new copy｜updated copy｜we (have) (revised|updated|republished|reissued) (the|Form)｜
+has been (replaced|superseded)｜switch to｜transition to｜begin using｜start using｜
+change(d) the form｜form change｜only the (new|current|latest)｜use the (new|current|latest)｜
+no longer (use|valid|current)｜two versions｜both versions｜either version｜which version｜
+same version｜matching version｜printed on the form｜bottom of the (page|form)｜edition date`），
+在未命中的 29 条里**只触发 3 条**，全是 I-90／I-129F／I-601A 那条通用提交提醒
+（命中的是 `edition date` 与 `bottom of the page`，讲的是「去哪儿看版本日期」而不是
+某一版的存废），挡下是对的。**这张词表的教训**：`edition` 的同义词（`revision`、
+`iteration`、`variant`、`printing`）在 37 条公告里一次都没出现过，USCIS 讲版本只用
+`edition` 一个词，这给「必须含 `edition`」这个条件又添一个实证。
+再按第二节第 2 点那个担忧查了非 mm/dd/yy 的版本号写法（`mm/dd/yyyy`、`yyyy-mm-dd`、
+`mm-dd-yy(yy)`、`mm.dd.yy(yy)`，以及「英文日期 + edition／version／form」与
+「edition／version + 英文日期」两个方向），**六种写法全部触发 0 条** ——
+USCIS 至今只用 mm/dd/yy 写版本号。
+未命中的 29 条按文本去重后是 **24 条不同的公告**（三条跨表格复用：HR-1 费用暂停挂
+I-131／I-765／I-589，通用提交提醒挂 I-90／I-129F／I-601A，FY2027 费用调整挂 I-765／I-589），
+逐条通读，**全部落在第二节已记的十二类里，无新类型**。
+8 条命中的公告逐条通读，归类仍是 A1×1（I-485 兑现形态）、A2×2（I-864／I-864A）、
+A3×1（I-485 的 *Casa Inc. v. Trump*）、A4×1（I-129）、A5×1（G-1450）、A6×2（I-765／I-539），
+无误报无漏报。无截断，公告最长 2310 字符（I-765 名下的 HR-1 费用暂停）余量 4.3 倍、
+Edition Date 原文最长 315 字符（I-693）余量 19 倍。
+
+中文要点按今天的日期逐条核过，**过时的一条都没有**。7 条带日期的要点里，
+已过去的日期全部写在已然语态里（I-485 的 9 月 18 日发布日与 9 月 2 日 Casa 禁令日、
+I-693 的 2025 年 7 月 2／3 日签字日分界、I-129 的 9 月 9 日发布日、
+I-765／I-539 的 9 月 14 日法院命令日与 9 月 15 日那条被取代的换版日、
+I-864／I-864A 的 8 月 31 日发布日与 9 月 30 日宽限期结束日），
+唯一的将来日期是 I-129 的 11 月 9 日，还有 34 天，其「旧版 02/27/26 可用到 11 月 9 日
+之前」与面板原文 `Starting Nov. 9, 2026, we will accept only the 09/09/26 edition.
+Until then, you can also use the 02/27/26 edition.` 逐字对应。
+按第四节第 1 点在 `kept`（不是 `all`）上抽强制切换日，抽出 I-485 的 9/18、
+I-864／I-864A 的 10/1、I-129 的 11/9 四条，两条对账：
+「切换日已过但 `cur` 未变」**未命中** —— 三条已过期的切换日里，公告点名要退件的版本
+分别是 I-485 的 01/20/25 与 09/04/26、I-864／I-864A 的 10/17/24，
+而三张表的 `cur` 分别是 09/18/26、08/24/26、08/24/26，没有一张的 `cur` 落在要退件的名单里；
+**（本轮一个方法上的教训：第一次写这条对账时把「要退件的版本」正则写得太松，
+连 `Only accept the 09/18/26` 里的新版也抓了进去，于是三张表全部假报矛盾。
+这条对账只能从 `Reject`／`will not process any`／`is not accepting`／`will not accept`
+这类否定句里取版本号，不能从 `accept the` 取 —— 同一条公告里新旧两版是并列写的。）**
+「切换日已过、公告措辞仍是现在时」第六天仍命中 I-864／I-864A —— 公告里
+`USCIS is providing a 30-day grace period during which we will accept the 10/17/24
+edition` 这个现在时一字未改，而面板 `cur` 本就已是 08/24/26、`also` 为空，
+正是第一节 A2 末尾说的「A2 兑现时抓取侧三处一处都不动」，要点已在 10-01 按到期改写，
+本轮无需再动。
+面板原文另逐字对了一遍：G-28（`We will publish a new edition of this form soon`，
+09/17/18 与 05/23/18 并列）与 I-918（同一措辞，01/20/25）的「新版即将发布」均未变，
+I-693 的签字日分版规则（原文 `on or before July 2, 2025` 两版皆可、`July 3, 2025 or later`
+只收 01/20/25，要点写的 2025 年与原文一致）、G-1145 的 `You can also use previous
+editions`、G-1450 的 `We will also accept prior editions`、I-912 的
+`We will also accept prior editions (or a written request)` 与各自要点逐字相符。
+另单独核了 10-01 那两条 FY2027 费用调整公告：其 10 月 16 日只剩 10 天，
+但它是**费用生效日而非换版日**，句式与换版切换句一模一样，正是第四节第 1 点警告的陷阱；
+本轮抽取按约定只对 `kept` 做，没有把它误抽成换版日，`notes.yaml` 不涉及费用，无需补要点。
+
+26 个表格 `up` 全部为空、`soon` 全部为假，I-765／I-539 的 `up: ""` 覆盖经第十七轮抓取
+仍然生效；`cn` 齐备（26/26），`notes.yaml` 与 `forms.yaml` 一一对应、无多余条目、
+无「只允许改的四个字段」之外的键（13 个表格有 `note`），`up` 非空却没有中文要点的
+表格 0 个。
+
+未改 `notes.yaml` 与任何代码逻辑，无需重新生成网页。G-1145「也接受」栏为空仍是已报
+在 #4 的识别遗漏，未重复开 Issue；本轮无新发现，未开新 Issue。
 
 2026-10-05 的核对方式：先 `git fetch` 把工作副本从 09-30 追到 10-04，再触发抓取
 （run 37316522984，`workflow_dispatch`，conclusion `success`），抓取 26/26 成功、
