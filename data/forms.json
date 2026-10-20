@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-19T09:06:35-04:00",
+ "generated_at": "2026-10-20T09:05:12-04:00",
  "forms": [
   {
    "id": "I-485",
@@ -21,9 +21,9 @@
    "last_changed": "2026-09-19",
    "prev_cur": "09/04/26",
    "tags": [
-    "upd"
+    "stable"
    ],
-   "flag": "alert"
+   "flag": ""
   },
   {
    "id": "I-130",
