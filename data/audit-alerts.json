@@ -158,11 +158,8 @@
  {
   "id": "G-1450",
   "url": "https://www.uscis.gov/g-1450",
-  "kept": [
-   "ALERT: On Feb. 6, 2026, we published a new edition of Form G-1450, Authorization for Credit Card Transactions. The new edition, 02/06/26, includes: An updated DHS Privacy Notice in the Form Instructions; and A Card Verification Value (CVV) field on the fillable form. This field is not required for USCIS processing but may be used by other DHS components. USCIS will continue to accept prior editions of Form G-1450."
-  ],
+  "kept": [],
   "all": [
-   "ALERT: On Feb. 6, 2026, we published a new edition of Form G-1450, Authorization for Credit Card Transactions. The new edition, 02/06/26, includes: An updated DHS Privacy Notice in the Form Instructions; and A Card Verification Value (CVV) field on the fillable form. This field is not required for USCIS processing but may be used by other DHS components. USCIS will continue to accept prior editions of Form G-1450.",
    "Alert: USCIS no longer accepts payments made by personal or business check, money order, or cashier's check for forms filed by paper unless you qualify for an exemption. When filing by mail, you can pay using a credit, debit, or prepaid card by completing Form G-1450, Authorization for Credit Card Transactions, or you can make a payment directly from a U.S. bank account by completing Form G-1650, Authorization for ACH Transactions. Before sending your package to USCIS, watch What and How to Pay for additional guidance on how to file at the USCIS Lockbox with the correct payment. USCIS continues to accept payments made through Pay.gov for applications and petitions filed online."
   ]
  },

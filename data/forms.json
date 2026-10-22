@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-21T09:07:02-04:00",
+ "generated_at": "2026-10-22T09:17:07-04:00",
  "forms": [
   {
    "id": "I-485",
@@ -369,9 +369,7 @@
     "全部旧版"
    ],
    "raw": "02/06/26. We will also accept prior editions. You can find the edition date at the bottom of the page on the form and instructions.",
-   "alerts": [
-    "ALERT: On Feb. 6, 2026, we published a new edition of Form G-1450, Authorization for Credit Card Transactions. The new edition, 02/06/26, includes: An updated DHS Privacy Notice in the Form Instructions; and A Card Verification Value (CVV) field on the fillable form. This field is not required for USCIS processing but may be used by other DHS components. USCIS will continue to accept prior editions of Form G-1450."
-   ],
+   "alerts": [],
    "up": "",
    "note": "**官网接受所有旧版**。02/06/26 新版只是更新了隐私声明、增加了 CVV 栏 （USCIS 处理时不要求填写），旧版照常可用。",
    "soon": false,
