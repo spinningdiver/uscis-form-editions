@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-19T10:05:04-04:00",
+ "generated_at": "2026-11-20T10:05:50-04:00",
  "forms": [
   {
    "id": "I-485",
@@ -48,21 +48,27 @@
    "id": "I-131",
    "cn": "旅行证件／回美证／人道假释申请",
    "en": "Application for Travel Documents, Parole Documents, and Arrival/Departure Records",
-   "cur": "01/20/25",
-   "also": [],
-   "raw": "01/20/25. You can find the edition date at the bottom of the page on the form and instructions.",
-   "alerts": [],
+   "cur": "04/22/26",
+   "also": [
+    "01/20/25"
+   ],
+   "raw": "04/22/26. Starting Dec. 21, 2026, we will accept only the 04/22/26 edition. Until that date, we will continue to accept the 01/20/25 edition. You can find the edition date at the bottom of the page on the form and instructions.",
+   "alerts": [
+    "ALERT: On Nov. 19, 2026, USCIS published a revised edition of Form I-131 (edition date 04/22/26). Starting Dec, 21, 2026, we will accept only the 04/22/26 edition of Form I-131. USCIS will reject prior editions of the form electronically submitted or postmarked on or after Dec. 21, 2026."
+   ],
    "up": "",
    "note": "",
    "soon": false,
    "status": "ok",
    "error": "",
-   "changed": false,
-   "last_changed": "",
+   "changed": true,
+   "last_changed": "2026-11-20",
+   "prev_cur": "01/20/25",
    "tags": [
-    "stable"
+    "upd",
+    "multi"
    ],
-   "flag": ""
+   "flag": "alert"
   },
   {
    "id": "I-765",
